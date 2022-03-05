@@ -81,8 +81,8 @@ let g:rehash256 = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " The lightline.vim theme
 let g:lightline = {
-      \ 'colorscheme': 'darcula',
-      \ }
+       'colorscheme': 'darcula',
+    }
 
 " Always show statusline
 set laststatus=2
