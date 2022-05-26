@@ -480,3 +480,5 @@ alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
 alias ghtok='pbcopy < ~/Documents/images/previews/file'
 alias update='sudo apt update && sudo apt upgrade'
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

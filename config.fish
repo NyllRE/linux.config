@@ -345,16 +345,32 @@ alias tips="lbrynet txo spend --type=support --is_not_my_input --blocking"
 alias dtoscopy='[ -d ~/.config ] || mkdir ~/.config && cp -Rf ~/.config ~/.config-backup-(date +%Y.%m.%d-%H.%M.%S) && cp -rf /etc/dtos/* ~'
 # Backup contents of /etc/dtos to a backup folder in $HOME.
 alias dtosbackup='cp -Rf /etc/dtos ~/dtos-backup-(date +%Y.%m.%d-%H.%M.%S)'
-alias ls="ls -la"
-alias fonfig="nvim ~/.config/fish/config.fish"
+
+alias py=python3
+alias dj="py manage.py"
+alias djr="dj runserver 0.0.0.0:8000"
+alias djm="dj makemigrations && dj migrate && djr"
+alias zenv="source zenv/bin/activate.fish"
+alias prenv="source ../zenv/bin/activate.fish"
+alias sai="sudo nala install"
+alias updoot="sudo nala update && sudo nala upgrade && sudo nala autoremove"
+alias vs="code . && exit"
+alias ls="ls -la | lolcat"
+alias e="exit"
+alias v="nvim"
+alias vv="nvim ."
+alias fconf="v ~/.config/fish/config.fish"
+alias vimconf="v ~/.config/nvim/init.vim"
+alias dev="cd ~/dev"
+alias y="yarn"
+alias yd="yarn dev"
 
 ### RANDOM COLOR SCRIPT ###
 # Get this script from my GitLab: gitlab.com/dwt1/shell-color-scripts
-# Or install it from the Arch User Repository: shell-color-scripts
-function fish_greeting
+# Or install it from the Arch User Repository: shell-color-scripts function fish_greeting
     if test (random 1 10) = 1; fish_logo; else; colorscript random; end
-end
 
 ### SETTING THE STARSHIP PROMPT ###
 starship init fish | source
 
+nvm alias default node
