@@ -1,0 +1,7 @@
+alias dj="python3 manage.py"
+alias djm="dj makemigrations && dj migrate && dj runserver"
+alias py=python3
+alias zenv="source zenv/bin/activate.fish"
+alias prenv="source ../zenv/bin/activate.fish"
+alias sai="sudo apt install"
+alias updoot="sudo apt update && sudo apt upgrade"
