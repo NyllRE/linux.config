@@ -195,6 +195,14 @@ function take --argument number
     head -$number
 end
 
+function npm
+	if $argv
+		rr
+	else
+		rr
+	end
+end
+
 # Function for org-agenda
 function org-search -d "send a search string to org-mode"
     set -l output (/usr/bin/emacsclient -a "" -e "(message \"%s\" (mapconcat #'substring-no-properties \
