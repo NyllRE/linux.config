@@ -6,6 +6,12 @@
 #
 # My fish config. Not much to see here; just some pretty standard stuff.
 
+### TO INSTALL COLORSCRIPTS
+# git clone https://gitlab.com/dwt1/shell-color-scripts.git
+# cd shell-color-scripts
+# sudo make install
+
+
 ### ADDING TO THE PATH
 # First line removes the path; second line sets it.  Without the first line,
 # your path gets massive and fish becomes very slow.
@@ -285,7 +291,7 @@ alias addall='git add .'
 alias branch='git branch'
 alias checkout='git checkout'
 alias clone='git clone'
-alias commit='git commit -m'
+alias commit='git add . && git commit -a -m'
 alias fetch='git fetch'
 alias pull='git pull origin'
 alias push='git push origin'
@@ -346,31 +352,48 @@ alias dtoscopy='[ -d ~/.config ] || mkdir ~/.config && cp -Rf ~/.config ~/.confi
 # Backup contents of /etc/dtos to a backup folder in $HOME.
 alias dtosbackup='cp -Rf /etc/dtos ~/dtos-backup-(date +%Y.%m.%d-%H.%M.%S)'
 
+### Python & Django Specific
 alias py=python3
 alias dj="py manage.py"
 alias djr="dj runserver 0.0.0.0:8000"
 alias djm="dj makemigrations && dj migrate && djr"
-alias zenv="source zenv/bin/activate.fish"
-alias prenv="source ../zenv/bin/activate.fish"
-alias sai="sudo nala install"
-alias updoot="sudo nala update && sudo nala upgrade && sudo nala autoremove"
+alias env="source env/bin/activate.fish"
+alias prenv="source ../env/bin/activate.fish"
+
+### Installations Specific
+alias install="sudo dnf install"
+alias update="sudo dnf update"
+alias "s: "="dnf search"
+alias remove="sudo dnf remove"
+
+
 alias vs="code . && exit"
-alias ls="ls -la | lolcat"
+alias lsc="ls -la | lolcat"
 alias e="exit"
+alias goodbye="c && colorscript -e 58 && echo Goodbye! | lolcat && colorscript -e 58 && sleep .5 && e"
+
+### Text Editors
 alias v="nvim"
 alias vv="nvim ."
+alias doom="~/.emacs.d/bin/doom"
+
 alias fconf="v ~/.config/fish/config.fish"
 alias vimconf="v ~/.config/nvim/init.vim"
+
 alias dev="cd ~/dev"
 alias y="yarn"
 alias yd="yarn dev"
 
+
 ### RANDOM COLOR SCRIPT ###
 # Get this script from my GitLab: gitlab.com/dwt1/shell-color-scripts
 # Or install it from the Arch User Repository: shell-color-scripts function fish_greeting
-    if test (random 1 10) = 1; fish_logo; else; colorscript random; end
+    if test (random 1 10) = 1; neofetch; else; colorscript random; end
 
 ### SETTING THE STARSHIP PROMPT ###
 starship init fish | source
 
-nvm alias default node
+
+# export NVM_DIR="$([ -z "{XDG_CONFIG_HOME-}" ] && printf %s "{HOME}/.nvm" || printf %s "{XDG_CONFIG_HOME}/nvm")"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
