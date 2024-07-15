@@ -19,6 +19,8 @@ first copy the repo then run the `fedora-initializer.sh` bash script:
 git clone https://github.com/NyllRE/linux.config.git
 cd linux.config
 sudo bash ./fedora-initializer.sh
+cd ..
+sudo rm -r ./linux.config # This will remove this repository as it has served it's purpose
 ```
 
 ---
