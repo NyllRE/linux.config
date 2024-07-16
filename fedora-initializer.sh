@@ -14,6 +14,9 @@ echo "Visual Studio Code Installation"
 rpm --import https://packages.microsoft.com/keys/microsoft.asc
 echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | tee /etc/yum.repos.d/vscode.repo > /dev/null
 
+# Gives permisions to common VSCode Extensions
+chown -R $(whoami) /usr/share/code
+chown -R $(whoami) /usr/bin/code
 
 echo "All dnf repos added, installing all packages"
 dnf check-update
