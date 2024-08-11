@@ -1,14 +1,4 @@
-#  ____ _____
-# |  _ \_   _|  Derek Taylor (DistroTube)
-# | | | || |    http://www.youtube.com/c/DistroTube
-# | |_| || |    http://www.gitlab.com/dwt1/
-# |____/ |_|
-#
-# My fish config. Not much to see here; just some pretty standard stuff.
-
-### TO INSTALL COLORSCRIPTS
-# git clone https://gitlab.com/dwt1/shell-color-scripts.git
-# cd shell-color-scripts
+#cd shell-color-scripts
 # sudo make install
 
 
@@ -20,9 +10,15 @@ set -e fish_user_paths
 
 ### EXPORT ###
 set fish_greeting                                 # Supresses fish's intro message
-set TERM "xterm-256color"                         # Sets the terminal type
-set EDITOR "emacsclient -t -a ''"                 # $EDITOR use Emacs in terminal
+#set -x PATH $BUN_INSTALL/bin $PATH
+set TERM "xterm-256color"                         # Sets the terminal tpe
+# set EDITOR "emacsclient -t -a ''"               # $EDITOR use Emacs in terminal
+set EDITOR "nvim"						                 # $EDITOR use Nvim in terminal
 set VISUAL "emacsclient -c -a emacs"              # $VISUAL use Emacs in GUI mode
+set ANDROID_HOME "/home/nyll/Android/Sdk"
+set CAPACITOR_ANDROID_STUDIO_PATH "/snap/android-studio/current/android-studio/bin/studio.sh"
+set -x PATH "/home/nyll/installations/chromedriver_linux64/chromedriver" $PATH
+set NI_CONFIG_FILE "$HOME/.config/ni/nirc"
 
 ### SET MANPAGER
 ### Uncomment only one of these!
@@ -151,6 +147,7 @@ function backup --argument filename
     cp $filename $filename.bak
 end
 
+
 # Function for copying files and directories, even recursively.
 # ex: copy DIRNAME LOCATIONS
 # result: copies the directory and all of its contents.
@@ -174,6 +171,11 @@ function coln
     end
 end
 
+# Function to compress and convert obs recordings to be usable 
+function obscompress
+	ffmpeg -i $argv[1] -vcodec libx265 -crf 20 $argv[2]
+end
+
 # Function for printing a row
 # ex: seq 3 | rown 3
 # output: 3
@@ -195,13 +197,6 @@ function take --argument number
     head -$number
 end
 
-function npm
-	if $argv
-		rr
-	else
-		rr
-	end
-end
 
 # Function for org-agenda
 function org-search -d "send a search string to org-mode"
@@ -244,7 +239,7 @@ alias doomupgrade="~/.emacs.d/bin/doom upgrade"
 alias doompurge="~/.emacs.d/bin/doom purge"
 
 # Changing "ls" to "exa"
-# alias ls='exa -al --color=always --group-directories-first' # my preferred listing
+alias ls='exa -alG --color=always --group-directories-first' # my preferred listing
 alias la='exa -a --color=always --group-directories-first'  # all files and dirs
 alias ll='exa -l --color=always --group-directories-first'  # long format
 alias lt='exa -aT --color=always --group-directories-first' # tree listing
@@ -271,11 +266,6 @@ alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
-# confirm before overwriting something
-alias cp="cp -i"
-alias mv='mv -i'
-alias rm='rm -i'
-
 # adding flags
 alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
@@ -299,12 +289,20 @@ alias addall='git add .'
 alias branch='git branch'
 alias checkout='git checkout'
 alias clone='git clone'
-alias commit='git add . && git commit -a -m'
+alias commit='addall && git commit -a -m'
 alias fetch='git fetch'
 alias pull='git pull origin'
 alias push='git push origin'
 alias tag='git tag'
 alias newtag='git tag -a'
+alias gitignore-respect="git rm -rf --cached . && git add ."
+
+alias killbg="jobs -p | xargs kill -9"
+
+function compit --argument message
+    commit $message && push
+end
+
 
 # get error messages from journalctl
 alias jctl="journalctl -p 3 -xb"
@@ -338,9 +336,9 @@ alias ytv-best="youtube-dl -f bestvideo+bestaudio "
 
 # switch between shells
 # I do not recommend switching default SHELL from bash.
-alias tobash="sudo chsh $USER -s /bin/bash && echo 'Now log out.'"
-alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Now log out.'"
-alias tofish="sudo chsh $USER -s /bin/fish && echo 'Now log out.'"
+alias tobash="sudo lchsh $USER -s /bin/bash && echo 'Now log out.'"
+alias tozsh="sudo lchsh $USER -s /bin/zsh && echo 'Now log out.'"
+alias tofish="sudo lchsh $USER -s /bin/fish && echo 'Now log out.'"
 
 # bare git repo alias for dotfiles
 alias config="/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME"
@@ -364,18 +362,22 @@ alias dtosbackup='cp -Rf /etc/dtos ~/dtos-backup-(date +%Y.%m.%d-%H.%M.%S)'
 alias py=python3
 alias dj="py manage.py"
 alias djr="dj runserver 0.0.0.0:8000"
-alias djm="dj makemigrations && dj migrate && djr"
+alias djm="dj makemigrations && dj migrate && dj migrate && djr"
 alias env="source env/bin/activate.fish"
+alias crenv="echo 'create this function you lazy sack' | lolcat"
 alias prenv="source ../env/bin/activate.fish"
 
 ### Installations Specific
 alias install="sudo dnf install"
 alias update="sudo dnf update"
-alias "s: "="dnf search"
+alias search="dnf search"
 alias remove="sudo dnf remove"
 
 
-alias vs="code . && exit"
+function vs
+	code $argv && exit
+end
+
 alias lsc="ls -la | lolcat"
 alias e="exit"
 alias goodbye="c && colorscript -e 58 && echo Goodbye! | lolcat && colorscript -e 58 && sleep .5 && e"
@@ -385,23 +387,41 @@ alias v="nvim"
 alias vv="nvim ."
 alias doom="~/.emacs.d/bin/doom"
 
-alias fconf="v ~/.config/fish/config.fish"
+alias fconf="v ~/.config/fish/config.fish && c && source ~/.config/fish/config.fish"
 alias vimconf="v ~/.config/nvim/init.vim"
 
-alias dev="cd ~/dev"
-alias y="yarn"
-alias yd="yarn dev"
+### mega lazyness
+alias d="nr dev"
 
+### apps
+alias firedev="~/.local/opt/firefox/firefox-bin > /dev/null 2>&1 &"
+alias pvpn="protonvpn-cli"
+
+### scripts
+alias telegrabing="pvpn c -f && z Telegrab && py telegrabber.py"
 
 ### RANDOM COLOR SCRIPT ###
 # Get this script from my GitLab: gitlab.com/dwt1/shell-color-scripts
-# Or install it from the Arch User Repository: shell-color-scripts function fish_greeting
-    if test (random 1 10) = 1; neofetch; else; colorscript random; end
+# Or using fedora:
+	# sudo dnf copr enable foopsss/shell-color-scripts
+	# sudo dnf install shell-color-scripts
+if test (random 1 10) = 1; neofetch; else; colorscript random; end
 
 ### SETTING THE STARSHIP PROMPT ###
 starship init fish | source
 
 
-# export NVM_DIR="$([ -z "{XDG_CONFIG_HOME-}" ] && printf %s "{HOME}/.nvm" || printf %s "{XDG_CONFIG_HOME}/nvm")"
+# set XDG_CONFIG_HOME '~'
+# set NVM_DIR "$([ -z "$XDG_CONFIG_HOME-" ] && printf %s "$HOME/.nvm" || printf %s "$HOME/nvm")"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
+zoxide init fish | source
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+# eval /home/nyll/anaconda3/bin/conda "shell.fish" "hook" $argv | source
+# <<< conda initialize <<<
+
+printf '\eP$f{"hook": "SourcedRcFileForWarp", "value": { "shell": "fish" }}\x9c'
+
+functions --copy fish_prompt fish_prompt_orig; function fish_prompt; fish_prompt_orig; echo; end
