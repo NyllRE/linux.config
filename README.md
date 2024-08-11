@@ -8,13 +8,14 @@ This repo is my very opinionated configuration for fedora systems, specifically 
 - NodeJS, NPM
 - Fish + Opinionated Configuration
 - Neovim + Opinionated Configuration
+- Starship + Opinionated Configuration
 
 > ⚠️⚠️⚠️ This repo has not been tested on a new system, proceed with caution ⚠️⚠️⚠️
 > <br> if you have tested it please inform me through issues if anything happens
 
 
 ## Installation
-first copy the repo then run the `fedora-initializer.sh` bash script:
+first clone the repo then run the `fedora-initializer.sh` bash script:
 ```sh
 git clone https://github.com/NyllRE/linux.config.git
 cd linux.config
