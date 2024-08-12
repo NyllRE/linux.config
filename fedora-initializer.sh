@@ -34,7 +34,7 @@ chown -R $(whoami) /usr/bin/code
 
 echo "All dnf repos added, installing all packages"
 dnf check-update
-dnf install -y code warp-terminal fish neovim nodejs npm neofetch
+dnf install -y code warp-terminal fish neovim nodejs npm neofetch easyeffects
 
 echo "Adding EasyEffects Presets"
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/JackHack96/PulseEffects-Presets/master/install.sh)"
