@@ -9,6 +9,7 @@ This repo is my very opinionated configuration for fedora systems, specifically 
 - Fish + Opinionated Configuration
 - Neovim + Opinionated Configuration
 - Starship + Opinionated Configuration
+- EasyEffects Presets
 
 > ⚠️⚠️⚠️ This repo has not been tested on a new system, proceed with caution ⚠️⚠️⚠️
 > <br> if you have tested it please inform me through issues if anything happens
